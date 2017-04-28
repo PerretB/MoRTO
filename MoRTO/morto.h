@@ -36,11 +36,12 @@ knowledge of the CeCILL license and that you accept its terms.
 #pragma once
 
 #include <vector>
+#include <string>
 
 namespace morto
 {
 	/**
-	* \brief Performs a monotonic / isotonic regression with respect to a tree ordering.
+	* \brief Performs a least square monotonic / isotonic regression with respect to a tree ordering.
 	* 
 	* \param parents Parent relation between nodes.
 	* The indexing of the nodes are assumed to be in topological order (e.g. nodes indices correspond to a post-order traversal of tree).
@@ -102,5 +103,18 @@ namespace morto
 		const std::vector<size_t> & parents, 
 		const std::vector<double> & values, 
 		const std::vector<double> & weights = {});
+
+
+	
+	/**
+	 * \brief A simple holder for the exceptions thrown by the library.
+	 */
+	struct MortoException
+	{
+		/**
+		 * \brief Description of the cause of the exception.
+		 */
+		std::string msg;
+	};
 
 }
