@@ -37,8 +37,6 @@ knowledge of the CeCILL license and that you accept its terms.
 
 #include <vector>
 #include <boost/heap/binomial_heap.hpp>
-#include <iostream>
-#include <utility>
 
 #include "morto.h"
 
@@ -62,7 +60,7 @@ namespace morto {
 	 */
 	class UnionFind {
 	private:
-		vector<int> parent;
+		vector<size_t> parent;
 		vector<int> rank;
 
 	public:
@@ -83,26 +81,28 @@ namespace morto {
 		Create a new singleton and return the index of its (single and canonical) node.
 		Complexity O(1) (amortized)
 		*/
-		int createSet()
+		/*
+		size_t createSet()
 		{
-			int size = parent.size();
+			size_t size = parent.size();
 			parent.push_back(size);
 			rank.push_back(0);
 			return size;
 		}
+		*/
 
 		/**
 		Finds and return the canonical node of the given nodeIndex and performs path compression.
 		Complexity O(a(n)) (amortized)
 		*/
-		int findCanonical(int nodeIndex)
+		size_t findCanonical(size_t nodeIndex)
 		{
-			int save = nodeIndex;
+			size_t save = nodeIndex;
 			while (parent[nodeIndex] != nodeIndex)
 				nodeIndex = parent[nodeIndex];
 			while (parent[save] != save)
 			{
-				int tmp = save;
+				size_t tmp = save;
 				save = parent[save];
 				parent[tmp] = nodeIndex;
 			}
@@ -114,7 +114,7 @@ namespace morto {
 		Returns the index of the canonical node of the union.
 		Complexity O(1)
 		*/
-		auto setUnion(int canonicalNodeIndex1, int canonicalNodeIndex2)
+		auto setUnion(size_t canonicalNodeIndex1, size_t canonicalNodeIndex2)
 		{
 			if (rank[canonicalNodeIndex1] > rank[canonicalNodeIndex2])
 			{
@@ -154,7 +154,7 @@ namespace morto {
 		/**
 		 * Index of the parent node
 		 */
-		int parent = 0;
+		size_t parent = 0;
 
 		/**
 		 * Weight
@@ -269,7 +269,7 @@ namespace morto {
 		 * \param i A valid node index (Precondition 0 <= i < tree.size())
 		 * \return A reference to node i
 		 */
-		TreeNode * getNode(int i)
+		TreeNode * getNode(size_t i)
 		{
 			return &nodes[i];
 		}
@@ -278,7 +278,7 @@ namespace morto {
 		 * \brief Number of nodes in the tree
 		 * \return Number of nodes in the tree
 		 */
-		int size() const
+		size_t size() const
 		{
 			return nodes.size();
 		}
@@ -300,22 +300,22 @@ namespace morto {
 		{
 
 
-			int canonicali = uf.findCanonical(i); // index of the representative tree node for the block containing node i
+			size_t canonicali = uf.findCanonical(i); // index of the representative tree node for the block containing node i
 			TreeNode * canonicalNode = tree.getNode(canonicali);
 
 
 			// while we have violators among our children, fuse current block with the block of the most important violator
 			while (!canonicalNode->heap.empty() && canonicalNode->getAverageWeight() < canonicalNode->heap.top().value)
 			{
-				int k = canonicalNode->heap.top().nodeIndex; // index of violator child k
+				size_t k = canonicalNode->heap.top().nodeIndex; // index of violator child k
 				canonicalNode->heap.pop();
 
-				int canonicalk = uf.findCanonical(k); // index of the representative tree node for the block containing node k
+				size_t canonicalk = uf.findCanonical(k); // index of the representative tree node for the block containing node k
 
 
 				auto resUnion = uf.setUnion(canonicali, canonicalk); // merge blocks containing i and k
-				int newCanonicalIndex = resUnion.first; // index of the new representative node (either i or k)
-				int otherIndex = resUnion.second; // index of the node that is not representative (either i or k)
+				auto newCanonicalIndex = resUnion.first; // index of the new representative node (either i or k)
+				auto otherIndex = resUnion.second; // index of the node that is not representative (either i or k)
 
 				// update local variable after merge
 				canonicalNode = tree.getNode(newCanonicalIndex);
@@ -334,7 +334,7 @@ namespace morto {
 			if (currentNode->parent != i)
 			{
 				TreeNode * node = tree.getNode(currentNode->parent);
-				currentNode->heap.update(currentNode->handle, { canonicalNode->getAverageWeight(), i });
+				node->heap.update(currentNode->handle, { canonicalNode->getAverageWeight(), i });
 			}
 		}
 
@@ -352,7 +352,7 @@ namespace morto {
 		size_t maxV = parents.size() - 1;
 		for (size_t i = 0; i < parents.size(); ++i)
 		{
-			if (parents[i]<0 || parents[i]>maxV)
+			if (parents[i]<0 || parents[i]>maxV) // size_t should be unsigned but well
 				return false;
 		}
 		return true;
@@ -368,6 +368,13 @@ namespace morto {
 		return true;
 	}
 
+    bool testPositiveWeights(const vector<double> & weights)
+    {
+        for (auto v: weights)
+            if(v<=0)
+                return false;
+        return true;
+    }
 	/*bool testSingleRoot(const vector<int> & parents)
 	{
 		int nparents = 0;
@@ -391,7 +398,9 @@ namespace morto {
 		testOrDie(weights.empty() || weights.size() == parents.size(), "weights must either be empty or have the same size as parents.");
 		testOrDie(testRelationDomain(parents), "The domain of the parents relation is invalid: there exists i such that parents[i]<0 or parents[i]>=parents.size()");
 		testOrDie(testTopologicalOrder(parents), "The parent relation is not given in a topological order: there exists i such that parents[i]<i");
-		//testOrDie(testSingleRoot(parents), "The parent relationcontains more than one root : there exists several i such that parents[i]==i");
+		if(weights.size()>0)
+			testOrDie(testPositiveWeights(weights),"Weights must be strictly positive.");
+        //testOrDie(testSingleRoot(parents), "The parent relationcontains more than one root : there exists several i such that parents[i]==i");
 
 		Tree tree = Tree(parents, values, weights);
 		return IRT_BIN(tree);
@@ -399,7 +408,7 @@ namespace morto {
 
 
 } // namespace morto
-
+/*
 
 using namespace morto;
 using namespace std;
@@ -432,3 +441,4 @@ int main(int argc, char ** argv)
 	getchar();
 	return 0;
 }
+*/

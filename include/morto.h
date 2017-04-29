@@ -45,6 +45,7 @@ namespace morto
 	* 
 	* \param parents Parent relation between nodes.
 	* The indexing of the nodes are assumed to be in topological order (e.g. nodes indices correspond to a post-order traversal of tree).
+	* Note that there may be several roots (i.e. the ordering is a forest)
 	* Preconditions :
 	*		\li parents.size() > 0
 	*		\li for all i 0<=parents[i]<parents.size()
@@ -60,6 +61,7 @@ namespace morto
 	* Else, the weight of node i is weights[i].
 	* Preconditions :
 	*		\li weights.size() == parents.size() || weights.empty()
+	 *		\li for all i weights[i]>0
 	* \return vector<double> results containing the isotonic regression values for each node.
 	* The regression value at node i is result[i].
 	* Postconditions :
@@ -67,7 +69,7 @@ namespace morto
 	*		\li for all i, results[i] <= results[parents[i]]
 	*
 	* The isotonic / monotonic regression solves the following problem:
-	*	result = argmin_x sum_i (weights[i] * (values[i]-x[i])²)
+	*	result = argmin_x sum_i (weights[i] * (values[i]-x[i])Â²)
 	*		s.t. for all i, x[i] <= x[parent[i]]
 	*
 	* The algorithm runs in O(n*log(n)) with n the number of nodes (size of the parents vector).
