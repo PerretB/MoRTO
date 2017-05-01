@@ -1,0 +1,14 @@
+from setuptools import setup, find_packages
+
+setup(
+    name='morto',
+    version='0.1',
+    license='CeCILL',
+    description='Monotonic / isotonic least square regression on tree ordering.',
+    author='Benjamin Perret',
+    author_email='benjamin.perret@esiee.fr',
+    packages=['morto'],
+    package_data={'morto': ['morto/@morto_precompiled_library@']},
+    include_package_data=True,
+    install_requires=["numpy",],
+)
