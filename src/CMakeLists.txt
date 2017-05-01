@@ -16,7 +16,7 @@ endif()
 
 add_library(MoRTO SHARED morto.cpp)
 install (TARGETS MoRTO DESTINATION lib)
-install (FILES morto.h DESTINATION include)
+install (FILES ../include/morto.h DESTINATION include)
 
 if (GEN_COMMANDLINE)
     add_executable(MoRTOCL mortocl.cpp)

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.0)
 project(MoRTO)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -11,6 +11,29 @@ set(SOURCE_FILES
 
 set(TEST_FILES test/test.cpp)
 
+
+
+option (DO_TEST
+        "Execute test suit." ON)
+
+if (DO_TEST)
+    enable_testing()
+endif(DO_TEST)
+
 add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/test)
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/python)
+
+if (DO_TEST)
+    add_custom_target( all_tests ALL
+            DEPENDS ${UNIT_TEST_TARGETS}
+            )
+
+    add_custom_command(TARGET all_tests
+            COMMENT "Run tests"
+            POST_BUILD COMMAND ctest ARGS --output-on-failure
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        )
+endif(DO_TEST)

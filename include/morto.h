@@ -107,7 +107,6 @@ namespace morto
 		const std::vector<double> & weights = {});
 
 
-	
 	/**
 	 * \brief A simple holder for the exceptions thrown by the library.
 	 */
