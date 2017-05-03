@@ -6,7 +6,7 @@ benjamin.perret@esiee.fr
 This software is a computer program whose purpose is to compute isotonic/
 monotonic regression on tree ordering.
 
-This software is governed by the CeCILL license under French law and
+This software is governed by the CeCILL-B license under French law and
 abiding by the rules of distribution of free software.  You can  use,
 modify and/ or redistribute the software under the terms of the CeCILL
 license as circulated by CEA, CNRS and INRIA at the following URL
@@ -30,7 +30,7 @@ data to be ensured and,  more generally, to use and operate it in the
 same conditions as regards security.
 
 The fact that you are presently reading this means that you have had
-knowledge of the CeCILL license and that you accept its terms.
+knowledge of the CeCILL-B license and that you accept its terms.
 
  */
 

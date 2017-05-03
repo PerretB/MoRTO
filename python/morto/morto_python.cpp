@@ -5,13 +5,12 @@
 using namespace morto;
 using namespace std;
 
-void monotonicRegressionOnTreeWeighted(
+void monotonicRegressionOnTree(
         int * parents, int sizeParents,
         double * values, int sizeValues,
-        double * weights, int sizeWeights,
-        double * results, int sizeResults)
+        double * results, int sizeResults,
+        double * weights, int sizeWeights)
 {
-
     if(sizeResults!=sizeParents)
     {
         throw MortoException{"Size of output array is incorrect."};
@@ -36,14 +35,3 @@ void monotonicRegressionOnTreeWeighted(
 }
 
 
-void monotonicRegressionOnTree(
-        int * parents, int sizeParents,
-        double * values, int sizeValues,
-        double * results, int sizeResults)
-{
-    monotonicRegressionOnTreeWeighted(
-            parents, sizeParents,
-            values, sizeValues,
-            nullptr, 0,
-            results,sizeResults);
-}

@@ -2,9 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='morto',
-    version='0.1',
+    version='@MORTO_VERSION_MAJOR@.@MORTO_VERSION_MINOR@',
     license='CeCILL',
     description='Monotonic / isotonic least square regression on tree ordering.',
+    url='https://github.com/perretb/morto/',
     author='Benjamin Perret',
     author_email='benjamin.perret@esiee.fr',
     packages=['morto'],
