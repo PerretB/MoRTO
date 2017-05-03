@@ -1,8 +1,8 @@
 
-option (STATIC_PYTHON
+option (PYTHON_STATIC_LINK
         "Static link of library in Python binding." ON)
 
-option (PIP_INSTALL
+option (PYTHON_PIP_INSTALL
         "Install python package with pip." ON)
 
 find_package(PythonInterp REQUIRED)
@@ -24,14 +24,13 @@ SET(CMAKE_SWIG_FLAGS "")
 SET_SOURCE_FILES_PROPERTIES(morto.i PROPERTIES CPLUSPLUS ON)
 SET_SOURCE_FILES_PROPERTIES(morto.i PROPERTIES SWIG_FLAGS "-includeall")
 
-if(STATIC_PYTHON)
+if(PYTHON_STATIC_LINK)
     SWIG_ADD_MODULE(morto python morto.i morto_python.cpp)
     SWIG_LINK_LIBRARIES(morto ${PYTHON_LIBRARIES}  MoRTO)
 else()
     SWIG_ADD_MODULE(morto python morto.i morto_python.cpp ${PROJECT_SOURCE_DIR}/src/morto.cpp)
     SWIG_LINK_LIBRARIES(morto ${PYTHON_LIBRARIES})
-endif(STATIC_PYTHON)
-
+endif(PYTHON_STATIC_LINK)
 
 configure_file(__init__.py ${CMAKE_CURRENT_BINARY_DIR}/__init__.py COPYONLY)
 
@@ -47,8 +46,9 @@ add_custom_command(
 
 add_custom_target(python_dist_file ALL DEPENDS ${CMAKE_BINARY_DIR}/${DIST_FILE})
 
-install(CODE "execute_process(COMMAND pip install ${CMAKE_BINARY_DIR}/${DIST_FILE})")
-#python setup.py sdist
+if(PYTHON_PIP_INSTALL)
+    install(CODE "execute_process(COMMAND pip install ${CMAKE_BINARY_DIR}/${DIST_FILE})")
+endif(PYTHON_PIP_INSTALL)
 
 if (DO_TEST)
     configure_file(run_test.py ${CMAKE_CURRENT_BINARY_DIR}/run_test.py COPYONLY)

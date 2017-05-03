@@ -108,12 +108,33 @@ Everything is ready to build and install the library: back to the terminal,
      make
      make install
 
+### Usage
+
+In C++: 
+
+    #include <morto.h>
+
+And compile with -lMoRTO
+
+In Python:
+
+    import morto
+    
+Et voilà !
+
+Documentation
+-------------
+
+The single function is described in the header file using doxygen syntax or in the python module using docstring format.
+
 
 Algorithm
 ---------
 
-The result is obtained with a complexity in O(n*log(n)) (with n the size of the vector data) thanks to the algorithm
-described in Pardalos, P. & Xue, G. Algorithms for a Class of Isotonic Regression Problems.
+Time complexity is in O(n*log(n)) (with n the size of the vector data).
+Space complexity is in O(n).
+
+Th algorithm is described in Pardalos, P. & Xue, G. Algorithms for a Class of Isotonic Regression Problems.
 Algorithmica (1999) 23: 211. doi:10.1007/PL00009258
 
 

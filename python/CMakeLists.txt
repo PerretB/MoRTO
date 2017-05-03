@@ -1,11 +1,7 @@
 option (PYTHON_BINDING
         "Generate python bindings." ON)
 
-option (INSTALL_PYTHON_BINDING
-        "Install python bindins with disutil." ON)
-
 if (PYTHON_BINDING)
-
 
     if(WIN32)
         set(morto_precompiled_library _morto.dll)
