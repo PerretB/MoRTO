@@ -85,6 +85,7 @@ Python bindings.
 * **Boost Heap**
 * Boost Test Library (optional to run unit tests)
 * Python 2.7+ (optional for Python bindings)
+* numpy (optional for Python bindings)
 * Swig (optional for Python bindings)
 * pip (optional to install Python bindings)
 * ccmake (optional for convenience)
