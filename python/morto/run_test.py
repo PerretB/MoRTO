@@ -1,5 +1,5 @@
 import unittest
-import morto
+import mortof as morto #test are meant to be run in build env before install
 import numpy as np
 
 

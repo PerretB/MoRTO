@@ -1,3 +1,3 @@
-from morto import *
+from mortof import *
 
-__all__ = ['morto']
+__all__ = ['mortof']

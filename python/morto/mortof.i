@@ -1,4 +1,4 @@
-%module morto
+%module mortof
 
 %{
 #define SWIG_FILE_WITH_INIT
@@ -9,13 +9,13 @@ static PyObject* pMortoException;
 %include "numpy.i"
 %init %{
 import_array();
-pMortoException = PyErr_NewException((char*)"_morto.MortoException", NULL, NULL);
+pMortoException = PyErr_NewException((char*)"_mortof.MortoException", NULL, NULL);
 Py_INCREF(pMortoException);
 PyModule_AddObject(m, "MortoException", pMortoException);
 %}
 
 %pythoncode %{
-MortoException = _morto.MortoException
+MortoException = _mortof.MortoException
               %}
 
 %define DOCSTRING_MODULE
@@ -23,7 +23,7 @@ MortoException = _morto.MortoException
 Author: Benjamin Perret
 Year: 2017"
 %enddef
-%module(docstring=DOCSTRING_MODULE) morto
+%module(docstring=DOCSTRING_MODULE) mortof
 
 %exception monotonicRegressionOnTree {
         try {

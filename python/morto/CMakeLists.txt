@@ -21,15 +21,15 @@ INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH} ${PROJECT_SOURCE_DIR}/include ${PROJE
 
 SET(CMAKE_SWIG_FLAGS "")
 
-SET_SOURCE_FILES_PROPERTIES(morto.i PROPERTIES CPLUSPLUS ON)
-SET_SOURCE_FILES_PROPERTIES(morto.i PROPERTIES SWIG_FLAGS "-includeall")
+SET_SOURCE_FILES_PROPERTIES(mortof.i PROPERTIES CPLUSPLUS ON)
+SET_SOURCE_FILES_PROPERTIES(mortof.i PROPERTIES SWIG_FLAGS "-includeall")
 
 if(PYTHON_STATIC_LINK)
-    SWIG_ADD_MODULE(morto python morto.i morto_python.cpp)
-    SWIG_LINK_LIBRARIES(morto ${PYTHON_LIBRARIES}  MoRTO)
+    SWIG_ADD_MODULE(mortof python mortof.i morto_python.cpp)
+    SWIG_LINK_LIBRARIES(mortof ${PYTHON_LIBRARIES}  MoRTO)
 else()
-    SWIG_ADD_MODULE(morto python morto.i morto_python.cpp ${PROJECT_SOURCE_DIR}/src/morto.cpp)
-    SWIG_LINK_LIBRARIES(morto ${PYTHON_LIBRARIES})
+    SWIG_ADD_MODULE(mortof python mortof.i morto_python.cpp ${PROJECT_SOURCE_DIR}/src/morto.cpp)
+    SWIG_LINK_LIBRARIES(mortof ${PYTHON_LIBRARIES})
 endif(PYTHON_STATIC_LINK)
 
 configure_file(__init__.py ${CMAKE_CURRENT_BINARY_DIR}/__init__.py COPYONLY)
@@ -38,7 +38,7 @@ SET(DIST_FILE morto-${MORTO_VERSION_MAJOR}.${MORTO_VERSION_MINOR}.tar.gz)
 
 add_custom_command(
         OUTPUT ${CMAKE_BINARY_DIR}/${DIST_FILE}
-        DEPENDS _morto
+        DEPENDS _mortof
         COMMAND ${PYTHON_EXECUTABLE} setup.py sdist
         COMMAND mv ${CMAKE_BINARY_DIR}/python/dist/${DIST_FILE} ${CMAKE_BINARY_DIR}/
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/python
@@ -57,7 +57,7 @@ if (DO_TEST)
             COMMAND ${PYTHON_EXECUTABLE}
             ${CMAKE_CURRENT_BINARY_DIR}/run_test.py
             )
-    set(UNIT_TEST_TARGETS ${UNIT_TEST_TARGETS} _morto CACHE INTERNAL "" FORCE)
+    set(UNIT_TEST_TARGETS ${UNIT_TEST_TARGETS} _mortof CACHE INTERNAL "" FORCE)
 endif (DO_TEST)
 
 

@@ -1,6 +1,6 @@
 
 if (DO_TEST)
-    find_package(Boost 1.55 REQUIRED COMPONENTS unit_test_framework)
+    find_package(Boost REQUIRED COMPONENTS unit_test_framework)
     include_directories(${Boost_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/include)
 
     add_executable(test_exe test.cpp)
