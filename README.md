@@ -4,13 +4,17 @@ MoRTO Monotonic regression with a tree ordering
 Description
 -----------
 
-MoRTO is a single function library to compute a least square monotonic / isotonic regression with a tree ordering.
+MoRTO is a single function library to compute a least square 
+monotonic / isotonic regression with a tree ordering.
 
-Given a vector of observed data, a vector of weights, and a tree ordering on the observed data points,
-the least square isotonic / monotonic regression finds the vector results such that:
+Given a vector of observed data, a vector of weights, and a tree ordering on 
+the observed data points, the least square isotonic / monotonic regression finds 
+the vector results such that:
 
     result = argmin_x sum_i (weights[i] * (data[i]-x[i])²)
-        s.t. for all i, j, rank(i) <= rank(j) implies x[i] <= x[j]
+        s.t. for all i, j, j is an ancestor of i implies x[i] <= x[j]
+
+
 
 MoRTO is written in C++ and provides Python/Numpy bindings.
 
@@ -18,7 +22,8 @@ MoRTO is written in C++ and provides Python/Numpy bindings.
 
 Example
 -------
-Given the following tree where each node is an ordered pair (node index (rank), node value (input data)).
+Given the following tree where each node is an ordered pair 
+(node index, node value (input data)).
                                     
                          (7,10)
                            ^
@@ -35,7 +40,8 @@ Given the following tree where each node is an ordered pair (node index (rank), 
         (0,13)    (1,14)       (2,6)   (3,8)
     
 The least square monotonic regression of the node values with respect to the 
-ordering given by their rank (node i is before j if i <= j) can be computed in C++:
+ordering given by the parent relation (node i is before j if j is an ancestor 
+of i) can be computed in C++:
  
     #include <vector>
     #include <morto.h>
@@ -76,8 +82,8 @@ morto.cpp requires a **C++ 14 compiler**.
 Installation
 ------------
 
-In a more complex scenario the included cmake scripts allows to build and install MoRTO as a shared library with 
-Python bindings.
+In a more complex scenario the included cmake scripts allows to build and 
+install MoRTO as a shared library with Python bindings.
 
 ### Requirements
 * **C++ 14 compiler**
@@ -125,7 +131,8 @@ Et voilà !
 Documentation
 -------------
 
-The single function is described in the header file using doxygen syntax or in the python module using docstring format.
+The single function is described in the header file using doxygen syntax or in 
+the python module using docstring format.
 
 
 Algorithm
@@ -134,8 +141,9 @@ Algorithm
 Time complexity is in O(n*log(n)) (with n the size of the vector data).
 Space complexity is in O(n).
 
-Th algorithm is described in Pardalos, P. & Xue, G. Algorithms for a Class of Isotonic Regression Problems.
-Algorithmica (1999) 23: 211. doi:10.1007/PL00009258
+The algorithm is described in Pardalos, P. & Xue, G. Algorithms for a Class of 
+Isotonic Regression Problems. Algorithmica (1999) 23: 211. 
+doi:10.1007/PL00009258
 
 
 License
@@ -143,8 +151,9 @@ License
 
 This library is distributed under the CeCILL-B license http://www.cecill.info.
 
-CeCILL-B is similar to BSD or Apache license with an obligation of citation: you can freely use, modify,
-and distribute this library in any software if you provide a correct citation.
+CeCILL-B is similar to BSD or Apache license with an obligation of citation: 
+you can freely use, modify, and distribute this library in any software if you 
+provide a correct citation.
 
 Author and contact information
 ------------------------------
