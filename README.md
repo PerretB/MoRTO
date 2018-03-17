@@ -1,5 +1,5 @@
-MoRTO Monotonic regression with a tree ordering
-===============================================
+MoRTO Monotonic (isotonic) regression with tree orderings
+=========================================================
 
 Description
 -----------
