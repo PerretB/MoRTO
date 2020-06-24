@@ -1,6 +1,9 @@
 MoRTO Monotonic (isotonic) regression with tree orderings
 =========================================================
 
+![Warning](https://upload.wikimedia.org/wikipedia/commons/archive/7/75/20100608203627%21Dialog-warning-yellow.svg) **This repository is not maintained: its functionality have been integrated to the [Higra](https://github.com/higra/Higra) library [higra.tree_monotonic_regression](https://higra.readthedocs.io/en/latest/python/tree_algorithm.html#higra.tree_monotonic_regression)** ![Warning](https://upload.wikimedia.org/wikipedia/commons/archive/7/75/20100608203627%21Dialog-warning-yellow.svg)
+
+
 Description
 -----------
 
